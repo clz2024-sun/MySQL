@@ -236,6 +236,176 @@ select 	truncate(1234.34567, 2),
         truncate(1235.34567, -2)
 from dual;
 
+-- POWER(숫자, n),  POW(숫자, n): 숫자의 n승   
+select 	pow(12, 2),    -- 144
+		power(12, 2)   -- 144
+from dual;
+
+-- SQRT(숫자): 숫자의 제곱근  
+select sqrt(144)     -- 12
+from dual;
+
+-- SIGN(숫자): 숫자가 음수이면 -1, 0이면 0, 양수이면 1  
+select 	sign(123),    -- 1
+		sign(0),      -- 0
+        sign(-123)    -- -1
+from dual;
+
+-- ABS(숫자): 절대값  
+select 	abs(123),   -- 123
+		abs(0),     -- 0    
+        abs(-123)   -- 123
+from dual;
+
+-- GREATEST(x, y, z, ...): 괄호안의 값중 가장 큰값
+select greatest(2, 0 , -2),      -- 2
+       greatest(4, 3.2, 5.25),    -- 5.25
+       greatest('B', 'A', 'C', 'c')   -- c
+from dual;
+
+-- LEAST(x, y, z, ...): 괄호안의 값중 가장 작은값  
+select least(2, 0 , -2),      -- -2
+       least(4, 3.2, 5.25),    -- 3.2
+       least('B', 'A', 'C', 'c')   -- A
+from dual;
+
+-- 단일행 함수 > 문자함수
+select concat('안녕', '하세요');
+select concat('안녕', '-', '하세요');
+select concat(first_name, " " ,last_name) 
+from employees;
+
+-- CONCAT_WS(s, str1, str2, ..., strn): str1, str2, ..., strn을 연결할때 사이에 s 로 연결
+-- *with seperator
+select concat_ws('-', 'abc', '123', '가다나');
+select concat_ws('-', first_name, last_name, phone_number)
+from employees;
+
+-- LCASE(str) 또는 LOWER(str): str의 모든 대문자를 소문자로 변환
+select 	first_name,
+		lcase(first_name),
+		lower(first_name),
+		lower('ABCabc!#$%'),
+		lower('가나다')
+from employees;
+
+-- UCASE(str) 또는 UPPER(str): str의 모든 소문자를 대문자로 변환
+select 	first_name,	
+		ucase(first_name),
+		upper(first_name),
+		upper('ABCabc!#$%'),
+		upper('가나다')
+from employees;
+
+-- 문자갯수
+select 	first_name,
+		length(first_name),   -- 바이트수
+		char_length(first_name),  -- 글자수
+        character_length(first_name)  -- 글자수
+from employees;
+
+select 	length('유재석'),          -- 바이트수  *조심
+		char_length('유재석'),     -- 글자수
+        character_length('유재석') -- 글자수
+from dual;
+
+-- SUBSTRING(str, pos, len) 또는 SUBSTR(str, pos, len):
+select 	first_name,
+		substr(first_name, 1, 3),   -- Ste
+        substr(first_name, 2, 3),    -- 2번째글자부터 3글자
+        substr(first_name, -3, 2)    -- 끝에서 3번째부터 2글자
+from employees;
+
+select 	 substr('901112-1234567', 8, 1)     -- 성별  
+		,substr('901112-1234567', -7, 1)   -- 성별
+        ,substr('901112-1234567', 3, 2)   -- 월
+        ,substr('901112-1234567', 5, 2)   -- 일
+from dual;
+
+-- LPAD(str, len, padstr):  RPAD(str, len, padstr)
+select 	first_name,
+		lpad(first_name, 10, '*'),
+        rpad(first_name, 10, '*')
+from employees;
+
+ -- TRIM(str)
+select concat('|', '        안녕하세요        ', '|'),
+       concat('|', trim('        안녕하세요        '), '|'),
+       concat('|', ltrim('        안녕하세요        '), '|'),
+       concat('|', rtrim('        안녕하세요        '), '|'),
+       trim(concat('|', '        안녕하세요        ', '|'))
+from dual;
+
+-- REPLACE(str, from_str, to_str): str에서 from_str을 to_str로 변경
+select 	first_name,
+		replace(first_name, 'a', '*'),
+		substr(first_name, 2, 3),
+        replace(first_name, substr(first_name, 2, 3), '***')
+from employees;
+
+
+-- 단일행 함수 > 날짜함수 
+select curdate() from dual;
+select curtime() from dual;
+select current_timestamp(), now() from dual;
+
+select 	adddate('2021-06-20 00:00:00', interval 1 year),
+		adddate('2021-06-20 00:00:00', INTERVAL 1 MONTH),  
+		adddate('2021-06-20 00:00:00', INTERVAL 1 WEEK),  
+		adddate('2021-06-20 00:00:00', INTERVAL 1 DAY),  
+		adddate('2021-06-20 00:00:00', INTERVAL 1 HOUR),  
+		adddate('2021-06-20 00:00:00', INTERVAL 1 MINUTE),  
+		adddate('2021-06-20 00:00:00', INTERVAL 1 SECOND)
+from dual;
+
+select 	subdate('2021-06-20 00:00:00', interval 1 year),
+		subdate('2021-06-20 00:00:00', INTERVAL 1 MONTH),  
+		subdate('2021-06-20 00:00:00', INTERVAL 1 WEEK),  
+		subdate('2021-06-20 00:00:00', INTERVAL 1 DAY),  
+		subdate('2021-06-20 00:00:00', INTERVAL 1 HOUR),  
+		subdate('2021-06-20 00:00:00', INTERVAL 1 MINUTE),  
+		subdate('2021-06-20 00:00:00', INTERVAL 1 SECOND)
+from dual;
+
+-- DATEDIFF(): TIMEDIFF(): 
+select 	datediff('2021-06-21 01:05:05', '2021-06-20 01:00:00'),
+		timediff('2021-06-21 01:05:05', '2021-06-20 01:00:00')
+from dual;
+
+
+select 	first_name,
+		hire_date,
+        floor(datediff(now(), hire_date)/365) workyear
+from employees
+order by workyear desc;
+
+-- 변환함수
+-- 날짜(숫자) --> 문자열
+select  now(),
+		date_format(now(), '%Y-%m-%d %H:%i:%s'),
+        date_format(now(), '%Y.%m.%d(%a) %H:%i:%s'),
+        date_format(now(), '%Y-%m-%d (%p)%h:%i:%s')
+from dual;
+
+
+-- FORMAT(숫자, p): 숫자에 콤마(,) 를 추가, 소수점 p자리까지 출력
+select 	format(1234567.89, 2),
+		format(1234567.89, 0),
+        format(1234567.89, -5)
+from dual;
+
+select 	first_name,
+		salary,
+        format(salary, 0)
+from employees;
+
+-- * IFNULL(컬럼명, null일때값): 컬럼의 값이 null일때 정해진값을 출력
+select 	first_name,
+		salary,
+		commission_pct,
+        salary * ifnull(commission_pct, 0) + 500 보너스, -- 월급*커미션퍼센트+500
+        ifnull(commission_pct, "없음")
+from employees;
 
 
 
