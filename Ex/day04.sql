@@ -122,9 +122,13 @@ on e.department_id = d.department_id
 
 # 조인 연습(equi join, inner join 두가지로 풀어볼것)
 -- 직원아이디, 이름, 월급, 부서아이디, 부서명, 도시아이디, 도시명
+   -- 풀어볼것
+
 -- 직원아이디, 이름, 월급, 부서아이디, 부서명, 도시아이디, 도시명, 나라아이디, 나라명
+   -- 풀어볼것
+   
 -- 직원아이디, 이름, 월급, 부서아이디, 부서명, 도시아이디, 도시명, 나라아이디, 나라명, 지역아이디, 지역명
--- Kimberely 도 나오게 해보세요
+-- where절 equi 조인
 select 	e.employee_id,
 		e.first_name,
         e.salary,
@@ -143,6 +147,7 @@ and l.country_id = c.country_id
 and c.region_id = r.region_id
 ;
 
+-- inner join
 select 	e.employee_id,
 		e.first_name,
         e.salary,
@@ -161,6 +166,7 @@ inner join countries c on l.country_id = c.country_id
 inner join regions r on c.region_id = r.region_id
 ;
 
+-- left join : 킴벌리 나오도록 
 select 	e.employee_id,
 		e.first_name,
         e.salary,
@@ -193,11 +199,11 @@ from employees e, employees m
 where e.manager_id = m.employee_id
 ;
 
--- inner join(106명)
-
--- outer join(107명)
 
 
+-- 참고 
+-- 잘못되 join
+-- 아무컬럼이나 where절에 놓으면 안된다
 select * from locations;
 
 select *
