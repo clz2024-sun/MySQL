@@ -208,7 +208,7 @@ select *
 from employees, departments
 ;
 
--- 조건문을 써서 필요한 결과만 선택한다
+-- 조건문을 써서 조건에 맞는 결과만 선택한다
 select 	employee_id,
 		first_name,
         salary,
@@ -217,16 +217,5 @@ select 	employee_id,
         departments.department_id
 from employees, departments
 where employees.department_id = departments.department_id
-;
-
--- 테이블명을 줄여서 사용할 수 있다
-select 	employee_id ,
-		first_name,
-        salary,
-        department_name,
-        e.department_id,
-        d.department_id
-from employees e, departments d
-where e.department_id = d.department_id
 ;
 
