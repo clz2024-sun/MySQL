@@ -96,17 +96,31 @@ select  first_name,
         salary 
 from employees
 where upper(first_name) like '%S%' ;
+-- 대문자로 바꾸고 S를 포함하는지 검사
 
+
+select  first_name, 
+        salary 
+from employees
+where first_name like '%S%' ;
+-- mysql은 기본적으로  대소문자를 구별하지 않는다
 
 
 /*
 문제8.
 전체 부서를 출력하려고 합니다. 순서는 부서이름이 긴 순서대로 출력해 보세오.
 */
-select department_name
+select 	department_name
+		-- ,char_length(department_name)
+from departments
+order by char_length(department_name) desc ;
+
+
+-- length()는 영어일때는 문제없지만 한글일때는 오차가 있을수있다
+select 	department_name
+		-- ,length(department_name)
 from departments
 order by length(department_name) desc ;
-
 
 
 /*
