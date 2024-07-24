@@ -189,7 +189,13 @@ where salary >all (select salary
 				   where department_id = 110); -- 8300, 12008
 
 
+
+
+-- ------------------------------------------------
+# SubQuery   where절 vs 테이블
+-- ------------------------------------------------
 -- 각 부서별로 최고월급을 받는 사원의 부서번호, 직원번호, 이름, 월급을 출력하세요
+-- where절로 풀이
 
 -- 1) 각부서별 최고월급액
 select  department_id,
@@ -228,6 +234,47 @@ where ( department_id, salary) in(select  department_id,
 								  from employees
 								  group by department_id)
 ;
+
+
+-- 각 부서별로 최고월급을 받는 사원의 부서번호, 직원번호, 이름, 월급을 출력하세요
+-- table로 풀이
+
+-- 1) 각 그룹별로 최고월급 데이터가 있는 테이블이 있으면 구할수 있다
+--    이부분은 생각해 내야함
+select 	e.department_id, 
+		max(salary) msalary
+from employees e
+group by e.department_id
+;
+-- 2) 전체구조
+select 	e.first_name,
+		e.salary,
+        m.msalary,
+        m.department_id
+from employees e, ((1)로만든 테이블사용) m     
+where e.department_id = m.department_id
+and e.salary = m.msalary
+;
+
+
+-- 3) 합치기
+select 	e.first_name,
+		e.salary,
+        m.msalary,
+        m.department_id
+from employees e, (select e.department_id, 
+						  max(salary) msalary
+				   from employees e
+				   group by e.department_id) m
+where e.department_id = m.department_id
+and e.salary = m.msalary
+;
+
+
+
+
+
+
 
 
 
